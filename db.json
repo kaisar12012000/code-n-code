@@ -1,0 +1,136 @@
+{
+  "rooms": [
+    {
+      "roomId": "9582879c-3b88-4fb2-b442-1329efcb04ad",
+      "hostCode": "HOST_fKPQPp",
+      "guestCode": "GUEST_uQKpCX",
+      "filePath": "",
+      "createdAt": "2024-08-27T08:00:04.011Z",
+      "id": 1
+    },
+    {
+      "roomId": "e32e197c-d032-441a-9716-cf35387aef9d",
+      "hostCode": "HOST_PuUktV",
+      "guestCode": "GUEST_HYSAYm",
+      "filePath": "",
+      "createdAt": "2024-08-27T08:55:39.053Z",
+      "id": 2
+    },
+    {
+      "roomId": "270c3418-4b51-4a4f-85c8-dc2fdd96adc4",
+      "hostCode": "HOST_NfhJNt",
+      "guestCode": "GUEST_PBQdlq",
+      "filePath": "",
+      "createdAt": "2024-08-27T09:22:32.388Z",
+      "id": 3
+    },
+    {
+      "roomId": "d35c9a71-d149-448a-94c8-bfb64c529bfd",
+      "hostCode": "HOST_JIKTaA",
+      "guestCode": "GUEST_IBRocp",
+      "filePath": "",
+      "createdAt": "2024-08-27T09:22:57.326Z",
+      "id": 4
+    },
+    {
+      "roomId": "692e28b1-c55e-44d9-bdca-617656fa0481",
+      "hostCode": "HOST_otsBzp",
+      "guestCode": "GUEST_UxXYsj",
+      "filePath": "",
+      "createdAt": "2024-08-27T10:25:42.535Z",
+      "id": 5
+    },
+    {
+      "roomId": "1eba4849-d1f7-4079-80e0-afa582f9e350",
+      "hostCode": "HOST_dpeziR",
+      "guestCode": "GUEST_nFXonE",
+      "filePath": "",
+      "createdAt": "2024-08-27T10:26:36.800Z",
+      "id": 6
+    },
+    {
+      "hostCode": "HOST_MzzSWg",
+      "guestCode": "GUEST_fzAKfE",
+      "filePath": "",
+      "createdAt": "2024-08-27T10:32:52.020Z",
+      "id": 7
+    },
+    {
+      "hostCode": "HOST_tfcWwT",
+      "guestCode": "GUEST_ySSByR",
+      "filePath": "",
+      "createdAt": "2024-08-27T10:35:53.003Z",
+      "id": 8
+    },
+    {
+      "hostCode": "HOST_ZxpNeh",
+      "guestCode": "GUEST_waSWdn",
+      "filePath": "",
+      "createdAt": "2024-08-27T10:36:54.235Z",
+      "id": 9
+    },
+    {
+      "id": -1,
+      "hostCode": "HOST_QzJzBx",
+      "guestCode": "GUEST_lHxcAL",
+      "filePath": "",
+      "createdAt": "2024-08-27T10:39:17.020Z"
+    },
+    {
+      "id": "cc606a69-381f-45d5-ab93-b247f13aeef9",
+      "hostCode": "HOST_kEUJOR",
+      "guestCode": "GUEST_hnQwLK",
+      "filePath": "",
+      "createdAt": "2024-08-27T10:40:33.014Z"
+    },
+    {
+      "id": "11c7ec64-24a6-4630-8a79-dc2a1df3f688",
+      "hostCode": "HOST_UgeYTi",
+      "guestCode": "GUEST_AswsmS",
+      "filePath": "",
+      "createdAt": "2024-08-27T15:03:23.374Z"
+    },
+    {
+      "id": "fb654a28-d47a-40f4-ad81-108c23ee69b4",
+      "hostCode": "HOST_OHUIzQ",
+      "guestCode": "GUEST_ZaHFlR",
+      "filePath": "",
+      "createdAt": "2024-08-27T16:04:53.175Z"
+    },
+    {
+      "id": "0258e15c-6c29-40e4-9e1f-38ae77ab01ca",
+      "hostCode": "HOST_HMmwkt",
+      "guestCode": "GUEST_rGjfOL",
+      "filePath": "",
+      "createdAt": "2024-08-27T16:11:47.384Z"
+    },
+    {
+      "id": "fe389282-acdf-4b19-8eb5-245ad0a8a43b",
+      "hostCode": "HOST_upaWud",
+      "guestCode": "GUEST_gKHwYc",
+      "filePath": "",
+      "createdAt": "2024-08-28T04:40:21.052Z"
+    },
+    {
+      "id": "dba3b6b1-1c6b-465f-88c8-ca9f76f4b45e",
+      "hostCode": "HOST_UfAfPy",
+      "guestCode": "GUEST_esbUWZ",
+      "filePath": "",
+      "createdAt": "2024-08-28T08:31:49.029Z"
+    },
+    {
+      "id": "aa26cc6e-85cd-4c93-95dd-445d6b893bdf",
+      "hostCode": "HOST_utXUNG",
+      "guestCode": "GUEST_ubptkF",
+      "filePath": "",
+      "createdAt": "2024-08-28T09:50:23.735Z"
+    },
+    {
+      "id": "b2385c67-c5e4-4262-96f6-d6b5e34de962",
+      "hostCode": "HOST_DGVReJ",
+      "guestCode": "GUEST_mRYjir",
+      "filePath": "",
+      "createdAt": "2024-08-28T12:18:32.077Z"
+    }
+  ]
+}
