@@ -20,10 +20,11 @@ type PropTypes = {
     errFromSocket: string | undefined,
     filePathFromSocket: string | undefined,
     langFromSocket: string | undefined,
-    roomId: string | undefined
+    roomId: string | undefined,
+    isLoading: boolean | undefined
 }
 
-export default function CodeEditor ({ socket, codeFromSocket, langFromSocket, filePathFromSocket, outputFromSocket, errOutputFromSocket, errFromSocket, roomId }: PropTypes): ReactNode {
+export default function CodeEditor ({ socket, codeFromSocket, langFromSocket, filePathFromSocket, outputFromSocket, errOutputFromSocket, errFromSocket, roomId, isLoading }: PropTypes): ReactNode {
 
     const [lang, setLang] = useState<string | undefined>("js")
     const [code, setCode] = useState<string | undefined>("")
@@ -46,11 +47,14 @@ export default function CodeEditor ({ socket, codeFromSocket, langFromSocket, fi
         setCode(newValue)
         // send new changes via socket
         if (socket) {
-            socket.emit("code-change", {code: newValue, lang, filePath, output, errOutput, err, roomId})
+            socket.emit("code-change", {code: newValue, lang, filePath, output, errOutput, err, roomId, isLoading: false})
         }
     }
 
     const runCode = async (): Promise<void> => {
+        if(socket) {
+            socket.emit("code-change", { code, lang, filePath, output, errOutput, err, roomId, isLoading: true })
+        }
         setOutput("")
         setErrOutput("")
         setErr("")
@@ -71,6 +75,9 @@ export default function CodeEditor ({ socket, codeFromSocket, langFromSocket, fi
             if(data.error) {
                 setErr(data.error.message)
             }
+            if(socket) {
+                socket.emit("code-change", { code, lang, filePath, output, errOutput, err, roomId, isLoading: false })
+            }
             setLoading(false)
           })
           .catch(e => {
@@ -82,37 +89,9 @@ export default function CodeEditor ({ socket, codeFromSocket, langFromSocket, fi
 
     const selectLang = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setLang(e.target.value)
-        // setCode("")
-//         if (e.target.value === "c") {
-//             setCode(`#include <stdio.h>
-
-// int main() {
-            
-//     return 0;
-// }`)
-//         } else if (e.target.value === "cpp") {
-//             setCode(`#include<iostream>
-
-// int main() {
-
-//     return 0;
-// }`)
-//         } else if (e.target.value === "go") {
-//             setCode(`package main
-
-// import "fmt"
-
-// func main() {
-// 	fmt.Println("Hello")
-// }`)
-//         } else {
-//             setCode("")
-//         }
-//         setFilePath("")
-//         setErr("")
-//         // console.log(lang)
+        
         if (socket) {
-            socket.emit("code-change", {code, lang, filePath, output, errOutput, err})
+            socket.emit("code-change", {code, lang: e.target.value, filePath, output, errOutput, err, roomId, isLoading: false})
         }
     }
 
@@ -120,19 +99,19 @@ export default function CodeEditor ({ socket, codeFromSocket, langFromSocket, fi
     useEffect(() => {
         console.log("filePath changed", filePath)
         if (socket) {
-            socket.emit("code-change", {code, lang, filePath, output, errOutput, err})
+            socket.emit("code-change", {code, lang, filePath, output, errOutput, err, roomId, isLoading: false})
         }
     }, [filePath])
     useEffect(() => {
         console.log("err changed", err)
         if (socket) {
-            socket.emit("code-change", {code, lang, filePath, output, errOutput, err})
+            socket.emit("code-change", {code, lang, filePath, output, errOutput, err, roomId, isLoading: false})
         }
     }, [err])
     useEffect(() => {
         console.log("output changed", output)
         if (socket) {
-            socket.emit("code-change", {code, lang, filePath, output, errOutput, err})
+            socket.emit("code-change", {code, lang, filePath, output, errOutput, err, roomId, isLoading: false})
         }
     }, [output])
 
@@ -167,13 +146,18 @@ export default function CodeEditor ({ socket, codeFromSocket, langFromSocket, fi
                 setErr(errFromSocket)
             }
         }
+        if (isLoading !== undefined) {
+            if(isLoading !== loading) {
+                setLoading(isLoading)
+            }
+        }
     }, [codeFromSocket, langFromSocket, filePathFromSocket, outputFromSocket, errFromSocket, errOutputFromSocket])
 
     return <div className="h-full" style={{height: "90vh"}}>
         <div id="code-editor" className="flex-col h-full">
             <div className="flex-1 w-50 h-3/4">
                 <div style={{height: "10%"}}>
-                    <select className="text-base text-black h-full px-2 mx-2 bg-slate-300" onChange={selectLang}>
+                    <select value={lang} className="text-base text-black h-full px-2 mx-2 bg-slate-300" onChange={selectLang}>
                         {langArr.map(item => <option className="text-base text-black" key={item.value} value={item.value}>{item.label}</option>)}
                     </select>
                     <button className="bg-violet-900 h-full px-10 hover:bg-violet-600 active:bg-slate-500" type="button" onClick={runCode}>
@@ -183,7 +167,7 @@ export default function CodeEditor ({ socket, codeFromSocket, langFromSocket, fi
                     </button>
                 </div>
                 <AceEditor
-                  mode="javascript"
+                  mode={lang === "py" ? "python" : "javascript"}
                   theme="github"
                   onChange={onChange}
                   name="code-editor"
@@ -199,10 +183,10 @@ export default function CodeEditor ({ socket, codeFromSocket, langFromSocket, fi
             <div className="flex-1 h-1/4 w-50 bg-black">
                 <p className="text-xl bg-slate-400 px-10">Output:</p>
                 <div className="px-14 py-2">
-                    <code>
+                    <code style={{ whiteSpace: "pre-line" }}>
                         {output}
                     </code>
-                    <code style={{color: "red"}}>
+                    <code style={{color: "red", whiteSpace: "pre-line"}}>
                         {errOutput}
                         {err}
                     </code>

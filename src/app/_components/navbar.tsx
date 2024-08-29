@@ -29,9 +29,12 @@ export default function Navbar({ activeLink }: PropTypes) {
             }
         }).then(res => res.json())
           .then(resData => {
-            setLoading(false);
             console.log(resData, 29)
+            localStorage.setItem("role", "host")
+            localStorage.setItem("isLoggedIn", "true")
+            console.log(localStorage.getItem("role"), localStorage.getItem("isLoggedIn"))
             router.push(`/code/${resData.data.room.id}`)
+            setLoading(false);
           })
           .catch(error => {
             console.log(error)
