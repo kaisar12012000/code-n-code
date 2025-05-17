@@ -2,7 +2,7 @@
 
 import { endpoints } from "@/app/helpers/url"
 import React, { useEffect, useState } from "react"
-import CodeEditor from "../page"
+import CodeEditor from "../../_components/codeEditor"
 import {io, Socket} from "socket.io-client";
 // import { randomUUID } from "crypto";
 import { v4 } from "uuid"
@@ -208,6 +208,7 @@ export default function Room({ params }:PropTypes) {
          errOutputFromSocket={errOutputFromSocket} 
          errFromSocket={errFromSocket}
          isLoading={isLoading}
+         user={user}
          />
     </div>
 }
