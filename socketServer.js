@@ -17,8 +17,14 @@ const redisClient = redis.createClient({
     host: process.env.NEXT_PUBLIC_DOMAIN,
     port: 3002,
 })
+const userRedisClient = redis.createClient({
+    host: process.env.NEXT_PUBLIC_DOMAIN,
+    port: 3002,
+})
+
 
 redisClient.connect();
+userRedisClient.connect();
 
 app.use(cors())
 app.use(express.json())
@@ -29,6 +35,11 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
     console.log("A user has connected.")
+
+    // socket.on("user-joined", async data => {
+    //     console.log(JSON.stringify(data.user) + "joined room: "+data.roomId);
+    //     await userRedisClient.set(data.roomId, )
+    // })
 
     socket.on("code-change", async (data) => {
         console.log("new code: ", data)

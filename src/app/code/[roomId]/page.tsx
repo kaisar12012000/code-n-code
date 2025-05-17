@@ -4,6 +4,8 @@ import { endpoints } from "@/app/helpers/url"
 import React, { useEffect, useState } from "react"
 import CodeEditor from "../page"
 import {io, Socket} from "socket.io-client";
+// import { randomUUID } from "crypto";
+import { v4 } from "uuid"
 
 let socket: Socket;
 
@@ -23,6 +25,7 @@ export default function Room({ params }:PropTypes) {
     const [filePath, setFilePath] = useState<string | undefined>("")
     const [codeFromSocket, setCodeFromSocket] = useState<string|undefined>()
     const [langFromSocket, setLangFromSocket] = useState<string|undefined>()
+    const [user, setUser] = useState({})
     // const [filePathFromSocket, setFilePathFromSocket] = useState<string|undefined>()
     const [outputFromSocket, setOutputFromSocket] = useState<string|undefined>()
     const [errOutputFromSocket, setErrOutputFromSocket] = useState<string|undefined>()
@@ -76,10 +79,23 @@ export default function Room({ params }:PropTypes) {
         }
     }
 
+    const createUser = (n: string) => {
+        let hexCode = "#";
+        for(let i = 0; i<6; i++) {
+            hexCode += "0123456789ABCDEF".charAt(Math.floor(Math.random()*16))
+        }
+        setUser({
+            id: v4(),
+            name: n,
+            hexCode
+        })
+    }
+
     const matchRoomCode = () => {
         // setRoomCode(e.target.value)
         if (roomCode.startsWith("HOST")) {
             if (roomCode === hostCode) {
+                createUser(name)
                 setIsLoggedIn(true)
                 localStorage.setItem("role", "host")
                 setIsHost(true)
@@ -88,6 +104,7 @@ export default function Room({ params }:PropTypes) {
             }
         } else if (roomCode.startsWith("GUEST")) {
             if(roomCode === guestCode) {
+                createUser(name)
                 setIsLoggedIn(true)
                 localStorage.setItem("role", "guest")
             } else {
@@ -103,6 +120,7 @@ export default function Room({ params }:PropTypes) {
         if(localStorage.getItem("role") === "host") {
             setIsHost(true)
             setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true")
+            createUser("Host")
             console.log("Host machine")
         }
         getRoomDetails()
@@ -114,6 +132,8 @@ export default function Room({ params }:PropTypes) {
         socket = io(`${process.env.NEXT_PUBLIC_SOCKET_URL}`);
 
         // console.log(socket)
+
+        // socket.emit("user-joined", {user, roomId: params.roomId})
 
         socket.on("code-change", (data) => {
             console.log("code has changed", data)

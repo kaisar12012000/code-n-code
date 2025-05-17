@@ -1,7 +1,6 @@
 "use client";
 
-import React, { ReactNode, useEffect, useState } from "react";
-import { render } from "react-dom";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { Socket } from "socket.io-client";
 import brace from "brace";
 import AceEditor from "react-ace";
@@ -21,10 +20,11 @@ type PropTypes = {
     filePathFromSocket: string | undefined,
     langFromSocket: string | undefined,
     roomId: string | undefined,
-    isLoading: boolean | undefined
+    isLoading: boolean | undefined,
+    user: any | undefined
 }
 
-export default function CodeEditor ({ socket, codeFromSocket, langFromSocket, filePathFromSocket, outputFromSocket, errOutputFromSocket, errFromSocket, roomId, isLoading }: PropTypes): ReactNode {
+export default function CodeEditor ({ socket, codeFromSocket, langFromSocket, filePathFromSocket, outputFromSocket, errOutputFromSocket, errFromSocket, roomId, isLoading, user }: PropTypes): ReactNode {
 
     const [lang, setLang] = useState<string | undefined>("js")
     const [code, setCode] = useState<string | undefined>("")
@@ -33,6 +33,8 @@ export default function CodeEditor ({ socket, codeFromSocket, langFromSocket, fi
     const [errOutput, setErrOutput] = useState<string | undefined>("")
     const [err, setErr] = useState<string | undefined>("")
     const [loading, setLoading] = useState<boolean>(false)
+    
+    const editor = useRef<HTMLDivElement>(null) 
     
     const langArr: Language[] = [
         {label: "Javascript", value: "js"},
@@ -44,6 +46,7 @@ export default function CodeEditor ({ socket, codeFromSocket, langFromSocket, fi
     ]
 
     const onChange = (newValue: string): void => {
+        const cursorCords = editor.current
         setCode(newValue)
         // send new changes via socket
         if (socket) {
@@ -167,6 +170,7 @@ export default function CodeEditor ({ socket, codeFromSocket, langFromSocket, fi
                     </button>
                 </div>
                 <AceEditor
+                //   ref={editor}
                   mode={lang === "py" ? "python" : "javascript"}
                   theme="github"
                   onChange={onChange}
