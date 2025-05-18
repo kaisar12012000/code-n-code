@@ -34,11 +34,11 @@ export default function CodeEditor ({ socket, codeFromSocket, langFromSocket, fi
     
     const langArr: Language[] = [
         {label: "Javascript", value: "js"},
-        {label: "Typescript", value: "ts"},
-        {label: "C", value: "c"},
-        {label: "C++", value: "cpp"},
-        {label: "Go (Golang)", value: "go"},
-        {label: "Python", value: "py"}
+        // {label: "Typescript", value: "ts"},
+        // {label: "C", value: "c"},
+        // {label: "C++", value: "cpp"},
+        // {label: "Go (Golang)", value: "go"},
+        // {label: "Python", value: "py"}
     ]
 
     const onChange = (newValue: string): void => {
