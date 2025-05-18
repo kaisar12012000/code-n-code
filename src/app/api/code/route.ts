@@ -9,7 +9,7 @@ import { platform } from "os"
 
 function genrateCodeFile (ext: string, code: string, filePath: string = ""): string {
     // console.log(__dirname);
-    const fileLoc = path.join(__dirname, "/tmp/codeFiles");
+    const fileLoc = path.join("/tmp", "/codeFiles");
 
     if (filePath === "") {
         if (!existsSync(fileLoc)) mkdirSync(fileLoc, {recursive: true});
